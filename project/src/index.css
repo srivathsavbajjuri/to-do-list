@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-light: #f9fafb;
+  --background-dark: #1f2937;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gray-50 text-gray-900;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+}
+
+.task-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.task-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.task-exit {
+  opacity: 1;
+}
+
+.task-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.task-card {
+  @apply bg-white rounded-lg shadow-soft p-4 mb-3 border border-gray-100 hover:shadow-md transition-shadow;
+}
+
+.task-card.dragging {
+  @apply shadow-lg border-primary-200;
+}
+
+.task-card.completed {
+  @apply bg-gray-50 border-gray-100;
+}
+
+.completed-task {
+  @apply line-through text-gray-500;
+}
+
+.button-primary {
+  @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-md transition-colors;
+}
+
+.button-secondary {
+  @apply bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-md transition-colors;
+}
+
+.button-danger {
+  @apply bg-error-500 hover:bg-error-600 text-white font-medium py-2 px-4 rounded-md transition-colors;
+}
+
+.button-success {
+  @apply bg-success-500 hover:bg-success-600 text-white font-medium py-2 px-4 rounded-md transition-colors;
+}
+
+.input-primary {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent;
+}
+
+.dropdown-menu {
+  @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 animate-slideIn;
+}
+
+.dropdown-item {
+  @apply block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-700;
+}
+
+.category-tag {
+  @apply text-xs font-medium px-2 py-1 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+}
+
+.react-datepicker-wrapper {
+  @apply w-full;
+}
+
+.category-work {
+  @apply bg-primary-100 text-primary-800;
+}
+
+.category-personal {
+  @apply bg-accent-100 text-accent-800;
+}
+
+.category-shopping {
+  @apply bg-teal-100 text-teal-800;
+}
+
+.category-health {
+  @apply bg-success-100 text-success-800;
+}
+
+.category-finance {
+  @apply bg-warning-100 text-warning-800;
+}
+
+.priority-high {
+  @apply text-error-500;
+}
+
+.priority-medium {
+  @apply text-warning-500;
+}
+
+.priority-low {
+  @apply text-success-500;
+}

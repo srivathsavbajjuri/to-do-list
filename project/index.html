@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Beautiful Task Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h1>Task<span>Flow</span></h1>
+                    </div>
+                    <p class="tagline">Organize your life, one task at a time</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main container">
+            <div class="command-bar">
+                <button class="btn btn-primary" id="addTaskBtn">
+                    <i class="fas fa-plus"></i> Add Task
+                </button>
+                <button class="btn btn-secondary" id="filterBtn">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+                <button class="btn btn-secondary" id="sortBtn">
+                    <i class="fas fa-sort"></i> Sort
+                </button>
+                <button class="btn btn-secondary" id="undoBtn">
+                    <i class="fas fa-undo"></i> Undo
+                </button>
+                <div class="command-bar-right">
+                    <button class="btn btn-secondary" id="clearCompletedBtn">
+                        Clear Completed
+                    </button>
+                    <button class="btn btn-danger" id="clearAllBtn">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+            </div>
+
+            <div id="taskFormContainer" class="hidden">
+                <form id="taskForm" class="task-form">
+                    <div class="form-header">
+                        <h2>Add New Task</h2>
+                        <button type="button" class="close-btn" id="closeTaskForm">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskTitle">Title *</label>
+                        <input type="text" id="taskTitle" required placeholder="What needs to be done?">
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" placeholder="Add some details..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="taskDueDate">Due Date</label>
+                            <input type="date" id="taskDueDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="taskPriority">Priority</label>
+                            <select id="taskPriority">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskCategory">Category</label>
+                            <select id="taskCategory">
+                                <option value="work">Work</option>
+                                <option value="personal" selected>Personal</option>
+                                <option value="shopping">Shopping</option>
+                                <option value="health">Health</option>
+                                <option value="finance">Finance</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelTaskBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Task</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="filterPanel" class="panel hidden">
+                <div class="panel-header">
+                    <h2>Filter Tasks</h2>
+                    <div class="panel-actions">
+                        <button class="btn-text" id="resetFilters">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="btn-icon" id="closeFilterPanel">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="filter-section">
+                        <input type="text" id="searchInput" placeholder="Search tasks..." class="search-input">
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" id="showCompleted" checked>
+                                Show completed tasks
+                            </label>
+                        </div>
+                        <div class="filter-group">
+                            <label>Categories</label>
+                            <div class="tag-group" id="categoryFilters"></div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Priority</label>
+                            <div class="tag-group" id="priorityFilters"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sortPanel" class="panel hidden">
+                <div class="panel-header">
+                    <h2>Sort Tasks</h2>
+                    <button class="btn-icon" id="closeSortPanel">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="panel-content">
+                    <div class="sort-options">
+                        <button class="sort-option active" data-sort="createdAt">
+                            <i class="fas fa-sort"></i> Creation Date
+                        </button>
+                        <button class="sort-option" data-sort="dueDate">
+                            <i class="fas fa-calendar-alt"></i> Due Date
+                        </button>
+                        <button class="sort-option" data-sort="priority">
+                            <i class="fas fa-flag"></i> Priority
+                        </button>
+                        <button class="sort-option" data-sort="alphabetical">
+                            <i class="fas fa-sort-alpha-down"></i> Alphabetical
+                        </button>
+                    </div>
+                    <div class="sort-direction">
+                        <button class="btn btn-secondary btn-block" id="toggleSortDirection">
+                            <i class="fas fa-sort-amount-down"></i>
+                            <span>Descending (Newest → Oldest)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="taskList" class="task-list"></div>
+
+            <div id="emptyState" class="empty-state hidden">
+                <div class="empty-state-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h2>No tasks found</h2>
+                <p>You don't have any tasks yet, or your current filters don't match any tasks.</p>
+                <button class="btn btn-primary" id="emptyStateAddBtn">
+                    <i class="fas fa-plus"></i> Add Your First Task
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>TaskFlow © 2024 - Your beautiful task manager</p>
+                    <div class="footer-love">
+                        <span>Made with</span>
+                        <i class="fas fa-heart"></i>
+                        <span>for productivity</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
